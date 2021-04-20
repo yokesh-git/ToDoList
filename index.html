@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+	<title>ToDo List App</title>
+
+	<link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.8.2/angular.min.js">
+	</script>
+</head>
+<body>
+
+	<div class="main" ng-app="myTodoList" ng-controller="myCtrl">
+		<h1>Todo List</h1>
+		<div class="search">
+			<input type="text" placeholder="Add Todo" ng-model="addMe">
+			<span ng-click="addItem()"><i class="fas fa-plus"></i></span>
+			
+		</div>
+		<ul>
+			<li ng-repeat="x in products">{{x}}<i ng-click="removeItem($index)" class="fas fa-trash-alt"></i></li>
+		</ul>
+		<p>{{errortext}}</p>
+	</div>
+
+	<script type="text/javascript">
+		var app = angular.module("myTodoList",[]);
+		app.controller("myCtrl",function($scope){
+			$scope.products = [];
+			$scope.addItem = function(){
+				$scope.errortext = "";
+				if(!$scope.addMe){
+					return;
+				}
+				if($scope.products.indexOf($scope.addMe) == -1){
+					$scope.products.push($scope.addMe);
+					$scope.addMe = null;
+				}
+				else{
+					$scope.errortext = "Already Exists";
+				}
+			}
+			$scope.removeItem = function(x){
+				$scope.products.splice(x,1);
+			}
+
+		})
+	</script>
+
+</body>
+</html>
